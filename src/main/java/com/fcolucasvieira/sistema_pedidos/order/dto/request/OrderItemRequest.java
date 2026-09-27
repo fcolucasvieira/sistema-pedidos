@@ -1,4 +1,4 @@
-package com.fcolucasvieira.sistema_pedidos.order.dto;
+package com.fcolucasvieira.sistema_pedidos.order.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

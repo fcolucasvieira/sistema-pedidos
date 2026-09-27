@@ -39,6 +39,7 @@ public class Product {
 
         if (this.quantity < amount)
             throw new IllegalArgumentException("Insufficient quantity to reduce amount");
+
         quantity -= amount;
     }
 
