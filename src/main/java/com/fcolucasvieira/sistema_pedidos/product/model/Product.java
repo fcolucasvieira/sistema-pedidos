@@ -21,6 +21,18 @@ public class Product {
     @Column(nullable = false)
     private int quantity;
 
+    public UUID getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
     protected Product() {}
 
     public Product(String name, BigDecimal price, int quantity) {
