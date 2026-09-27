@@ -2,8 +2,10 @@ package com.fcolucasvieira.sistema_pedidos.order.model;
 
 import com.fcolucasvieira.sistema_pedidos.user.model.User;
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
+@Getter
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,6 +39,9 @@ public class Order {
     protected Order() {}
 
     public Order(User user, List<OrderItem> items) {
+        if (user == null)
+            throw new IllegalArgumentException("User can't be null");
+
         this.user = user;
 
         if (items != null)
@@ -46,4 +52,14 @@ public class Order {
         this.items.add(item);
         item.setOrder(this);
     }
+
+    public BigDecimal calculateTotalPrice() {
+        if (this.items.isEmpty())
+            return BigDecimal.ZERO;
+
+        return items.stream()
+                .map(OrderItem::getFullPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
 }

@@ -38,7 +38,10 @@ public class Product {
             throw new IllegalArgumentException("Reduction amount can't be less than or 0");
 
         if (this.quantity < amount)
-            throw new IllegalArgumentException("Insufficient quantity to reduce amount");
+            throw new IllegalArgumentException(
+                    String.format("Insufficient stock for product '%s'. Request: %d, Available: %d",
+                    this.name, amount, this.quantity)
+            );
 
         quantity -= amount;
     }

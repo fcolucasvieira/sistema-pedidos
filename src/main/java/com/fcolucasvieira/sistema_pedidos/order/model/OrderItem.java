@@ -2,12 +2,14 @@ package com.fcolucasvieira.sistema_pedidos.order.model;
 
 import com.fcolucasvieira.sistema_pedidos.product.model.Product;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "order_items")
+@Getter
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
