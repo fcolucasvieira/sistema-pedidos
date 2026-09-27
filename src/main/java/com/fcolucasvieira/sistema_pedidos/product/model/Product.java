@@ -33,6 +33,15 @@ public class Product {
         return price;
     }
 
+    public void reduceStock(int amount) {
+        if (amount <= 0)
+            throw new IllegalArgumentException("Reduction amount can't be less than or 0");
+
+        if (this.quantity < amount)
+            throw new IllegalArgumentException("Insufficient quantity to reduce amount");
+        quantity -= amount;
+    }
+
     protected Product() {}
 
     public Product(String name, BigDecimal price, int quantity) {

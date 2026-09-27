@@ -29,10 +29,19 @@ public class OrderItem {
 
     protected OrderItem() {}
 
-    public OrderItem(Product product, int quantity, BigDecimal fullPrice) {
+    public OrderItem(Product product, int quantity) {
+        if (product == null)
+            throw new IllegalArgumentException("Product can't be null");
+
         this.product = product;
+
+        if (quantity <= 0)
+            throw new IllegalArgumentException("Quantity can't be less than or 0");
+
         this.quantity = quantity;
-        this.fullPrice = fullPrice;
+
+        this.fullPrice = product.getPrice()
+                .multiply(BigDecimal.valueOf(quantity));
     }
 
     public void setOrder(Order order) {
