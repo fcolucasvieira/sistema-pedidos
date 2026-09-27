@@ -20,14 +20,14 @@ public class Order {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // (mappedBy = "order") -> relacionamento entre order e order_items
-    // Referenciada na tabela order_items através do atributo order (coluna order_id)
+    // relacionamento entre order e order_items (1 -> N)
+    // (mappedBy = "order") A FK será mapeada na table order_items através do atributo order (column order_id)
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OrderStatus status =  OrderStatus.IN_PROGRESS;
+    private OrderStatus status = OrderStatus.IN_PROGRESS;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -38,15 +38,12 @@ public class Order {
     public Order(User user, List<OrderItem> items) {
         this.user = user;
 
-        if (items != null) {
+        if (items != null)
             items.forEach(this::addItem);
-        }
     }
 
-    // Adiciona item ao pedido relacionando os dois
     public void addItem(OrderItem item) {
         this.items.add(item);
-
         item.setOrder(this);
     }
 }

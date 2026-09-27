@@ -26,6 +26,14 @@ public class User {
 
     protected User() {}
 
+    public UUID getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public User(String name, String email, String password, Role role) {
         this.name = name;
         this.email = email;

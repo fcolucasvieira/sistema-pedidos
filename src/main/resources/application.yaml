@@ -13,3 +13,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
+
+app:
+  security:
+    default-password: ${DEFAULT_PASSWORD}
