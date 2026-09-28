@@ -1,5 +1,6 @@
 package com.fcolucasvieira.sistema_pedidos.order.service;
 
+import com.fcolucasvieira.sistema_pedidos.common.exception.ResourceNotFoundException;
 import com.fcolucasvieira.sistema_pedidos.order.dto.request.AlterOrderStatusRequest;
 import com.fcolucasvieira.sistema_pedidos.order.dto.response.OrderResponse;
 import com.fcolucasvieira.sistema_pedidos.order.mapper.OrderMapper;
@@ -31,7 +32,7 @@ public class OrderService {
 
     public OrderResponse findById(UUID id) {
         Order order = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found with Id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with Id: " + id));
 
         return mapper.toResponse(order);
     }
@@ -39,7 +40,7 @@ public class OrderService {
     @Transactional
     public OrderResponse alterOrderStatus(UUID id, AlterOrderStatusRequest request) {
         Order order = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found with Id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with Id: " + id));
 
         order.updateStatus(request.status());
 

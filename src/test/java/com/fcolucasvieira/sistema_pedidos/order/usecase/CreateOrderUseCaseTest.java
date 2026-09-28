@@ -1,5 +1,7 @@
 package com.fcolucasvieira.sistema_pedidos.order.usecase;
 
+import com.fcolucasvieira.sistema_pedidos.common.exception.BusinessRuleException;
+import com.fcolucasvieira.sistema_pedidos.common.exception.ResourceNotFoundException;
 import com.fcolucasvieira.sistema_pedidos.order.dto.request.CreateOrderRequest;
 import com.fcolucasvieira.sistema_pedidos.order.dto.request.OrderItemRequest;
 import com.fcolucasvieira.sistema_pedidos.order.dto.response.OrderResponse;
@@ -89,7 +91,7 @@ class CreateOrderUseCaseTest {
         CreateOrderRequest request = new CreateOrderRequest(userId, List.of());
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> createOrderUseCase.execute(request));
+        assertThrows(ResourceNotFoundException.class, () -> createOrderUseCase.execute(request));
 
         verify(productRepository, never()).findById(any());
         verify(orderRepository, never()).save(any());
@@ -105,7 +107,7 @@ class CreateOrderUseCaseTest {
         when(productRepository.findById(productId))
                 .thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> createOrderUseCase.execute(request));
+        assertThrows(ResourceNotFoundException.class, () -> createOrderUseCase.execute(request));
 
         verify(orderRepository, never()).save(any());
     }
@@ -122,7 +124,7 @@ class CreateOrderUseCaseTest {
         when(productRepository.findById(productId))
                 .thenReturn(Optional.of(product));
 
-        assertThrows(IllegalArgumentException.class, () -> createOrderUseCase.execute(request));
+        assertThrows(BusinessRuleException.class, () -> createOrderUseCase.execute(request));
 
         verify(orderRepository, never()).save(any());
     }

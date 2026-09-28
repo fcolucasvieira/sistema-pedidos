@@ -1,5 +1,6 @@
 package com.fcolucasvieira.sistema_pedidos.order.model;
 
+import com.fcolucasvieira.sistema_pedidos.common.exception.BusinessRuleException;
 import com.fcolucasvieira.sistema_pedidos.user.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -70,7 +71,7 @@ public class Order {
             return;
 
         if (this.status.isTerminal()) {
-            throw new IllegalStateException("Can't updates order status already finished order");
+            throw new BusinessRuleException("Can't updates order status already finished order");
         }
 
         this.status = status;

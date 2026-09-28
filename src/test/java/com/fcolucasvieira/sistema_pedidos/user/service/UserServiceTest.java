@@ -1,5 +1,6 @@
 package com.fcolucasvieira.sistema_pedidos.user.service;
 
+import com.fcolucasvieira.sistema_pedidos.common.exception.BusinessRuleException;
 import com.fcolucasvieira.sistema_pedidos.user.dto.CreateUserRequest;
 import com.fcolucasvieira.sistema_pedidos.user.dto.CreateUserResponse;
 import com.fcolucasvieira.sistema_pedidos.user.model.Role;
@@ -69,7 +70,7 @@ class UserServiceTest {
 
         when(repository.existsByEmail(email)).thenReturn(true);
 
-        assertThrows(RuntimeException.class, () -> service.create(request));
+        assertThrows(BusinessRuleException.class, () -> service.create(request));
 
         verify(repository, times(1)).existsByEmail(email);
         verify(repository, never()).save(any(User.class));

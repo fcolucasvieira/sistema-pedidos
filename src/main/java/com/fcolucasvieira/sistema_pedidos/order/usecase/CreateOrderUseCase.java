@@ -1,5 +1,6 @@
 package com.fcolucasvieira.sistema_pedidos.order.usecase;
 
+import com.fcolucasvieira.sistema_pedidos.common.exception.ResourceNotFoundException;
 import com.fcolucasvieira.sistema_pedidos.order.dto.request.CreateOrderRequest;
 import com.fcolucasvieira.sistema_pedidos.order.dto.request.OrderItemRequest;
 import com.fcolucasvieira.sistema_pedidos.order.dto.response.OrderResponse;
@@ -28,7 +29,7 @@ public class CreateOrderUseCase {
     @Transactional
     public OrderResponse execute(CreateOrderRequest request) {
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new RuntimeException("User not found with Id: " + request.userId()));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with Id: " + request.userId()));
 
         List<OrderItem> items = request.items().stream()
                 .map(this::processOrderItem)
@@ -43,7 +44,7 @@ public class CreateOrderUseCase {
 
     private OrderItem processOrderItem(OrderItemRequest request) {
         Product product = productRepository.findById(request.productId())
-                .orElseThrow(() -> new RuntimeException("Product not found with Id: " + request.productId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with Id: " + request.productId()));
 
         product.reduceStock(request.quantity());
 

@@ -1,5 +1,6 @@
 package com.fcolucasvieira.sistema_pedidos.product.model;
 
+import com.fcolucasvieira.sistema_pedidos.common.exception.BusinessRuleException;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -23,24 +24,24 @@ public class Product {
     @Column(nullable = false)
     private int quantity;
 
-    public void reduceStock(int amount) {
-        if (amount <= 0)
-            throw new IllegalArgumentException("Reduction amount can't be less than or 0");
-
-        if (this.quantity < amount)
-            throw new IllegalArgumentException(
-                    String.format("Insufficient stock for product '%s'. Request: %d, Available: %d",
-                    this.name, amount, this.quantity)
-            );
-
-        quantity -= amount;
-    }
-
     protected Product() {}
 
     public Product(String name, BigDecimal price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+    }
+
+    public void reduceStock(int amount) {
+        if (amount <= 0)
+            throw new IllegalArgumentException("Reduction amount can't be less than or 0");
+
+        if (this.quantity < amount)
+            throw new BusinessRuleException(
+                    String.format("Insufficient stock for product '%s'. Request: %d, Available: %d",
+                            this.name, amount, this.quantity)
+            );
+
+        quantity -= amount;
     }
 }

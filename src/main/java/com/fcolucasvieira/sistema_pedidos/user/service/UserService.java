@@ -1,5 +1,6 @@
 package com.fcolucasvieira.sistema_pedidos.user.service;
 
+import com.fcolucasvieira.sistema_pedidos.common.exception.BusinessRuleException;
 import com.fcolucasvieira.sistema_pedidos.user.dto.CreateUserRequest;
 import com.fcolucasvieira.sistema_pedidos.user.dto.CreateUserResponse;
 import com.fcolucasvieira.sistema_pedidos.user.model.User;
@@ -24,7 +25,7 @@ public class UserService {
         boolean existsEmail = repository.existsByEmail(request.email());
 
         if (existsEmail)
-            throw new RuntimeException("User already exists with Email: " + request.email());
+            throw new BusinessRuleException("User already exists with Email: " + request.email());
 
         User user = new User(
                 request.name(),
