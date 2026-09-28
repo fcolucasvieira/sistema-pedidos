@@ -1,12 +1,14 @@
 package com.fcolucasvieira.sistema_pedidos.product.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "products")
+@Getter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,18 +22,6 @@ public class Product {
 
     @Column(nullable = false)
     private int quantity;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
 
     public void reduceStock(int amount) {
         if (amount <= 0)

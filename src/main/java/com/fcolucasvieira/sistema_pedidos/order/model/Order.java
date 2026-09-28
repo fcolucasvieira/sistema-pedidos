@@ -30,7 +30,7 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private OrderStatus status = OrderStatus.IN_PROGRESS;
+    private OrderStatus status = OrderStatus.PENDING;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -60,6 +60,20 @@ public class Order {
         return items.stream()
                 .map(OrderItem::getFullPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public void updateStatus(OrderStatus status) {
+        if (status == null)
+            throw new IllegalArgumentException("New status can't be null");
+
+        if (this.status == status)
+            return;
+
+        if (this.status.isTerminal()) {
+            throw new IllegalStateException("Can't updates order status already finished order");
+        }
+
+        this.status = status;
     }
 
 }
