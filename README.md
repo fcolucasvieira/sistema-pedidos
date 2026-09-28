@@ -8,10 +8,9 @@ Uma API REST robusta desenvolvida com **Spring Boot 4** e **Java 21** para o ger
 - [Sobre o Projeto](#-sobre-o-projeto)
 - [Tecnologias Utilizadas](#-tecnologias-utilizadas)
 - [Arquitetura e Decisões de Design](#-arquitetura-e-decisões-de-design)
-- [Desenho da Arquitetura](#-desenho-da-arquitetura)
+- [Desenho da Modelagem de dados](#-desenho-da-modelagem-de-dados)
 - [Como Executar o Projeto](#-como-executar-o-projeto)
 - [Documentação da API (Swagger)](#-documentação-da-api-swagger)
-- [Próximos Passos](#-próximos-passos)
 
 ---
 
